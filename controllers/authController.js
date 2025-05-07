@@ -4,17 +4,26 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.signup = async (req, res) => {
-  const { email, password } = req.body;
-
+  const { username, password, email, role } = req.body;
   const existingUser = await User.findOne({ email });
   if (existingUser)
     return res.status(400).json({ error: 'User already exists' });
 
   const passwordHash = await bcrypt.hash(password, 10);
-  const newUser = new User({ email, passwordHash });
-  await newUser.save();
+  // You can customize role assignment here based on logic
+  const newUser = new User({
+      username,
+      passwordHash,
+      email,
+      role: role || 'user', // Default to 'user' if no role provided
+  });
 
-  res.status(201).json({ message: 'User registered successfully' });
+  try {
+      const savedUser = await newUser.save();
+      res.status(201).json(savedUser);
+  } catch (error) {
+      res.status(500).json({ message: 'Error registering user', error });
+  }
 };
 
 exports.login = async (req, res) => {
