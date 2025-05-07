@@ -27,9 +27,11 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, username, password } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({
+    $or: [{ email: email }, { username: username }]
+  });  
   if (!user)
     return res.status(400).json({ error: 'Invalid credentials' });
 
