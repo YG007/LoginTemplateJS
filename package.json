@@ -2,7 +2,7 @@
   "name": "logintemplatejs",
   "version": "1.0.0",
   "description": "SignUp and validation template in NodeJS",
-  "main": "server.js",
+  "main": "app.js",
   "dependencies": {
     "accepts": "^2.0.0",
     "bcryptjs": "^3.0.2",
@@ -29,6 +29,7 @@
     "escape-html": "^1.0.3",
     "etag": "^1.8.1",
     "express": "^5.1.0",
+    "express-request-id": "^3.0.0",
     "finalhandler": "^2.1.0",
     "forwarded": "^0.2.0",
     "fresh": "^2.0.0",
@@ -63,6 +64,7 @@
     "mongodb": "^6.16.0",
     "mongodb-connection-string-url": "^3.0.2",
     "mongoose": "^8.14.1",
+    "morgan": "^1.10.0",
     "mpath": "^0.9.0",
     "mquery": "^5.0.0",
     "ms": "^2.1.3",
@@ -98,11 +100,12 @@
     "vary": "^1.1.2",
     "webidl-conversions": "^7.0.0",
     "whatwg-url": "^14.2.0",
+    "winston": "^3.17.0",
     "wrappy": "^1.0.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -114,5 +117,8 @@
   "bugs": {
     "url": "https://github.com/YG007/LoginTemplateJS/issues"
   },
-  "homepage": "https://github.com/YG007/LoginTemplateJS#readme"
+  "homepage": "https://github.com/YG007/LoginTemplateJS#readme",
+  "devDependencies": {
+    "eslint": "^9.26.0"
+  }
 }

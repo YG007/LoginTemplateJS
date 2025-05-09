@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const logService = require('../services/loggerService');
 
 /**
  * @desc Get logged-in user profile
@@ -10,8 +11,12 @@ exports.getProfile = async (req, res) => {
         const user = await User.findById(req.user.userId).select('-password');
         if (!user) return res.status(404).json({ message: 'User not found' });
 
+        logService.verbose(`Fetching profile for user ${req.user.userId}`);
+        logService.info('User profile retrieved successfully');
+
         res.json({ user });
     } catch (error) {
+        logService.error('Error fetching profile: ' + error.message);
         res.status(500).json({ message: 'Error fetching profile', error });
     }
 };
