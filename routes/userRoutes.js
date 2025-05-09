@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const authenticateToken = require('../middleware/authMiddleware');
-const checkRole = require('../middleware/roleMiddleware');
 const userController = require('../controllers/userController');
+const policies = require('../middlewares/policies');
 
 // This route requires user to be authenticated
-router.get('/profile', authenticateToken, userController.getProfile);
+router.get('/profile', policies.isAuthenticated, userController.getProfile);
 
 // This route requires user to be 'admin'
-router.get('/admin', authenticateToken, checkRole(['admin']), userController.getAdminDashboard);
+router.get('/admin', policies.isAdmin, userController.getAdminDashboard);
 
 module.exports = router;
