@@ -5,9 +5,10 @@ const logger = createLogger({
   level: 'info',
   format: format.combine(
     format.timestamp(),
-    format.printf(({ timestamp, level, message }) => {
+    format.printf(({ timestamp, level, message, ...rest }) => {
       const traceId = contextService.get('traceId') || 'no-trace';
-      return `[${timestamp}] ${level.toUpperCase()} [${traceId}]: ${message}`;
+      const meta = Object.keys(rest).length ? JSON.stringify(rest) : '';
+      return `[${timestamp}] ${level.toUpperCase()} [${traceId}]: ${message} ${meta}`;
     })
   ),
   transports: [new transports.Console()]
@@ -15,7 +16,7 @@ const logger = createLogger({
 
 module.exports = {
   info: (msg) => logger.info(msg),
-  error: (msg) => logger.error(msg),
+  error: (msg, meta) => logger.error(msg, meta),
   warn: (msg) => logger.warn(msg),
   verbose: (msg) => logger.verbose(msg)
 };
